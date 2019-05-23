@@ -1,0 +1,34 @@
+.centeredCardContend {
+    display:flex;
+    flex-flow: row wrap;
+    margin-right: auto;
+    margin-left: auto;
+}
+.MiniCardLeft {
+    margin-right: auto;
+    width: 25.5%;
+    padding-right:5%;
+}
+.MiniCardCenter {
+    width: 25.5%;
+    padding-left:5%;
+    padding-right:5%;
+    border-left: solid;
+    border-right:solid;
+}
+.MiniCardRight {
+    padding-left: 5%;
+    width: 25.5%;
+    margin-left: auto;
+}
+.SpeedStressCardRight {
+    padding-left:5%;
+    width:40%;
+    border-left: solid;
+    margin-right: auto;
+}
+.SpeedStressCardLeft {
+    padding-right:5%;
+    width:40%;
+    margin-left: auto;
+}

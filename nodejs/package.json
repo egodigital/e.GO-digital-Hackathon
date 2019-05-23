@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apexcharts": "^3.6.12",
     "express": "^4.15.2",
     "socket.io": "^2.2.0"
   }
