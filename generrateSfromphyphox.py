@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
+import json
 
 #loading file
 filename = sys.argv[1]
@@ -76,3 +77,159 @@ plt.legend()
 plt.grid()
 plt.show()
 plt.close()
+
+
+
+# Gennerate demo data for Steering wheel, Distance, Power consumption, Wheel pressure
+
+def generraterandomdata(length, time_range, grad_polynom, show=False):
+	#scale x-axis:
+	x_scale_factor = time_range/float(length)
+	x_scale = []
+	for i in range(length):
+		x_scale.append(x_scale_factor*i)
+
+	#Create Polynom
+	values = np.random.rand(1,length)[0]
+	params = np.polyfit(x_scale, values, grad_polynom)
+	def polynom(x, params):
+		value = 0
+		ln = len(params)
+		for i in range(ln):
+			value+=params[i]*x**(ln-i-1)
+		return value
+
+	# Calculate curve
+	area = np.arange(0, time_range, time_range/float(length))
+	f = []
+	value = 0
+	for x in area:
+		value2 = polynom(x, params)
+		if value2 > 1 or value2 < 0:
+			f.append(value)
+		else:
+			f.append(value2)
+			value = value2
+
+	# Plot data
+	if(show):
+		plt.figure()
+		plt.plot(x_scale, values, 'o')
+		plt.plot(area, f, c='r')
+		plt.xlabel("t [s]")
+		plt.show()
+	return (f, x_scale)
+
+def ksmooth(data, k):
+	if len(data) < 2*k+1:
+		print("ERROR")
+		return None
+	newdata = [None]*len(data)
+	i = k+1
+	I = np.sum(data[0: 2*k+1])
+	for a in range(k+1):
+		newdata[a] = (I/(2*k+1))
+	while i < len(data)-k:
+		I -= data[i-k-1]
+		I += data[i+k]
+		newdata[i] = (I/(2*k+1))
+		i += 1
+	for a in range(len(data)-k, len(data)):
+		newdata[a] = (I/(2*k+1))
+	#s = 0
+	#for p in newdata:
+	#	if p == None:
+	#		s += 1
+	#print(s)
+	return newdata
+
+# 	Steering wheel Puls level
+print(len(gps_t))
+ts, x = generraterandomdata(len(gps_t), gps_t[-1], 8)
+ts += ksmooth(np.asarray(gps_a)/2, 5)
+s = []
+i = 0
+while i<len(gps_v):
+	s.append(ts[i]*gps_v[i])
+	i += 1
+
+
+# 	Distance to front driver in m
+d, x = generraterandomdata(len(gps_t), gps_t[-1], 4)
+d -= np.mean(d)
+d *= 3
+d += 4
+d = ksmooth(d, 10)
+
+# Power consumption
+w, x = generraterandomdata(len(gps_t), gps_t[-1], 4)
+w -= np.amin(w)
+w *= 5
+w += gps_a
+
+# Wheel pressure
+tp, x = generraterandomdata(len(gps_t), gps_t[-1], 4)
+tp -= np.amin(tp)
+#tp *= imu_x * 3
+tp += gps_a
+p = ksmooth(tp, 10)
+
+tbreakf = [x if x < 0 else 0 for x in gps_a]
+tbreakf = ((gps_v-10)**3 if (gps_v-10)>0 else 0)
+
+def gS(gps_v, gps_a, s, d, w, p):
+	return gps_v/50 + ((gps_v-50)**8/200 if (gps_v-50)>0 else 0) + 10*np.abs(gps_a) + (s + 100*1/d + w + p)/10
+
+S = []
+i = 0
+while i < len(gps_t):
+	S.append(gS(gps_v[i], gps_a[i], s[i], d[i], w[i], p[i]))
+	i += 1
+	pass
+
+S = [s if s >= 0 else 0 for s in S]
+S = ksmooth(S, 5)
+
+
+
+plt.plot(gps_t, S, color="black")
+plt.plot(gps_t, gps_a, color="grey")
+plt.plot(gps_t, s, color="C0")
+plt.xlabel('time in s')
+plt.ylabel('Stress')
+plt.title("Generrated Stress data for GPS measurement")
+plt.grid()
+plt.show()
+plt.close()
+
+# Generrating json with:
+# 	- gps_v
+# 	- gps_a
+# 	- gps_t
+# 	- gps_lon + gps_lat
+# 	- S
+
+class MyEncoder(json.JSONEncoder):
+	def default(self, obj):
+		if isinstance(obj, np.integer):
+			return int(obj)
+		elif isinstance(obj, np.floating):
+			return float(obj)
+		elif isinstance(obj, np.ndarray):
+			return obj.tolist()
+		else:
+			return super(MyEncoder, self).default(obj)
+
+js = json.dumps({"v": gps_v, "a": gps_a, "t": gps_t, "lon": gps_lon, "lat": gps_lat, "S": S}, sort_keys=True, cls=MyEncoder)
+
+print(js)
+print()
+print()
+print()
+print()
+S = (S-np.min(S))
+S /= np.max(S)
+i = 0
+while i < len(gps_t):
+	print("[{}, {}, {}], ".format(gps_lat[i], gps_lon[i], S[i]))
+	i += 1
