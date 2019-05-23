@@ -1,0 +1,7 @@
+https://unpkg.com/onsenui/css/onsenui.css
+https://unpkg.com/onsenui/css/onsen-css-components.min.css
+https://unpkg.com/onsenui/js/onsenui.min.js
+https://unpkg.com/jquery/dist/jquery.min.js
+href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""
+src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""
+src="./libs/leaflet-heat.js"
