@@ -230,7 +230,7 @@ class MyEncoder(json.JSONEncoder):
 		else:
 			return super(MyEncoder, self).default(obj)
 
-js = json.dumps({"v": gps_v, "a": gps_a, "t": gps_t, "lon": gps_lon, "lat": gps_lat, "S": S}, sort_keys=True, cls=MyEncoder)
+js = json.dumps({"v": gps_v, "a": gps_a, "t": gps_t, "lon": gps_lon, "lat": gps_lat, "S": S, "meanS": np.mean(S), "meanv": np.mean(gps_v), "duaration": gps_t[-1]}, sort_keys=True, cls=MyEncoder)
 
 print(js)
 print()
