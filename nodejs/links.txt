@@ -1,0 +1,2 @@
+https://github.com/nodesource/distributions/blob/master/README.md#deb
+Benutze node.js 10.x !!
