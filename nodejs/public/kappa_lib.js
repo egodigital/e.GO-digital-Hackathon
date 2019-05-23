@@ -41,28 +41,38 @@ function setMiniTripCard(parent, id) {
             '<div class="title">' +
                 '<i class="fas fa-user-alt" style="border: solid; border-radius: 50%; padding:3%; margin-right:5%"></i>'+
                 'Justus'+
-            '</div>' +
-            '<div>'+
-                '<ons-button class="right">'+
-                    '<i class="fas fa-share-alt"></i>'+
-                '</ons-button>'+
-                '<ons-button class="right" style="margin-left:5%">'+
+                '<ons-button style="margin-left:5%; float:right">'+
                     '<i class="fas fa-ellipsis-v"></i>'+
                 '</ons-button>'+
-            '</div>'+
-            '<div style="margin-top:5%;display:flex;flex-flow: row wrap;">'+
+                '<ons-button style="float:right;">'+
+                    '<i class="fas fa-share-alt"></i>'+
+                '</ons-button>'+
+            '</div>' +
+            '<div class="centeredCardContend">'+
                 '<div class="MiniCardLeft">'+
-                    '<p class="center">Distance</p>'+
+                    '<p>Distance</p>'+
+                    '<p id="'+id+'_distance"></p>'+
                 '</div>'+
                 '<div class="MiniCardCenter center">'+
-                    '<p class="center">Speed</p>'+
-                '</div>'+
+                    '<p>Speed</p>'+
+                    '<p id="'+id+'_speed"></p>'+
+                    '</div>'+
                 '<div class="MiniCardRight">'+
-                    '<p class="center">Stress</p>'+
+                    '<p>Stress</p>'+
+                    '<p id="'+id+'_stress"></p>'+
                 '</div>'+
             '</div>'+
         '</ons-card>'
     );
+
+    $('#'+id+'_distance').html("100 km");
+    $('#'+id+'_speed').html("50 km/h");
+    $('#'+id+'_stress').html("300");
+
+    // Go to details if clicked:
+    $('#'+id).click(function () {
+        document.querySelector('#myNavigator').pushPage('page2.html', {data: {title: 'Kappa'}});
+    });
 }
 
 function setChart(parent, Id, title) {
@@ -78,7 +88,7 @@ function setChart(parent, Id, title) {
 
     var options = {
         chart: {
-            height: 350,
+            height: 200,
             type: 'line',
             zoom: {
             enabled: false
@@ -108,4 +118,24 @@ function setChart(parent, Id, title) {
     );
 
     chart.render();
+}
+
+function setSpeedStressCard(parent, id) {
+    $('#'+parent).append(
+        '<ons-card>'+
+            '<div id="'+id+'" class="centeredCardContend">'+
+                '<div class="SpeedStressCardLeft">'+
+                    '<p align="center">&Oslash; Speed</p>'+
+                    '<p id="'+id+'_speed" align="center"></p>'+
+                '</div>'+
+                '<div class="SpeedStressCardRight">'+
+                    '<p align="center">&Oslash; Stress</p>'+
+                    '<p id="'+id+'_stress" align="center"></p>'+
+                '</div>'+
+            '</div>'+
+        '</ons-card>'
+    );
+
+    $('#'+id+'_speed').html("100 km/h");
+    $('#'+id+'_stress').html("300");
 }

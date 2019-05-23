@@ -16,7 +16,7 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="kappa_lib.js"></script>
-  <link rel="stylesheet" rel="kappa_lib.css">
+  <link rel="stylesheet" href="kappa_lib.css">
 </head>
 <body>
     <ons-page class="page1">
@@ -24,9 +24,9 @@
                 <div class="center">Kappa</div>
         </ons-toolbar>
         
-        <div id="page_body"></div>
-        
+      <div id="page_body"></div>
+    </ons-page>
     <script>
-        setChart("page_body", "chart", "Speed");
+      setSpeedStressCard("page_body", "card1");
     </script>
 </body>

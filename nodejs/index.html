@@ -15,18 +15,48 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="kappa_lib.js"></script>
-  <link rel="stylesheet" rel="kappa_lib.css">
+  <link rel="stylesheet" href="kappa_lib.css">
 </head>
 <body>
-    <ons-page class="page1">
-        <ons-toolbar>
-                <div class="center">Kappa</div>
-        </ons-toolbar>
-        
-        <div id="page_body"></div>
-    </ons-page>
+    <ons-navigator swipeable id="myNavigator" page="page1.html"></ons-navigator>
 
-    <script>
-        setMap("page_body", "map1");
-    </script>
+  <template id="page1.html">
+    <ons-page id="page1">
+      <ons-toolbar>
+        <div class="center">Kappa</div>
+      </ons-toolbar>
+
+      <div id="page1_body"></div>
+      <script>
+        setMiniTripCard("page1_body", "card1");
+        setMiniTripCard("page1_body", "card2");
+      </script>
+    </ons-page>
+  </template>
+
+  <template id="page2.html">
+    <ons-page id="page2">
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Kappa</ons-back-button></div>
+        <div class="center"></div>
+      </ons-toolbar>
+
+      <div id="page2_body"></div>
+      <script>
+          setMap("page2_body", "map1");
+          setChart("page2_body", "speed_chart", "Speed");
+          setChart("page2_body", "stress_chart", "Stress");
+          setSpeedStressCard("page2_body", "card");
+        </script>
+    </ons-page>
+  </template>
+
+  <script>
+    document.addEventListener('init', function(event) {
+      var page = event.target;
+      if (page.id === 'page2') {
+        page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
+      }
+  });
+  </script>
 </body>
