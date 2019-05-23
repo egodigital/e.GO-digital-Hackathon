@@ -174,16 +174,25 @@ tp -= np.amin(tp)
 tp += gps_a
 p = ksmooth(tp, 10)
 
-tbreakf = [x if x < 0 else 0 for x in gps_a]
-tbreakf = ((gps_v-10)**3 if (gps_v-10)>0 else 0)
+print(len(gps_t))
 
-def gS(gps_v, gps_a, s, d, w, p):
-	return gps_v/50 + ((gps_v-50)**8/200 if (gps_v-50)>0 else 0) + 10*np.abs(gps_a) + (s + 100*1/d + w + p)/10
+tbreakf = np.asarray([-x if x < 0 else 0 for x in gps_a])
+temp = [(x)**2 for x in tbreakf]
+tempb = [0]*10
+i = 0
+while i < len(temp)-10:
+	tempb.append(temp[i])
+	i += 1
+tbreakf = tempb
+print(len(tbreakf))
+
+def gS(gps_v, gps_a, s, d, w, p, tb):
+	return gps_v/50 + ((gps_v-50)**8/200 if (gps_v-50)>0 else 0) + 10*np.abs(gps_a) + tb*3 + (s + 100*1/d + w + p)/10
 
 S = []
 i = 0
 while i < len(gps_t):
-	S.append(gS(gps_v[i], gps_a[i], s[i], d[i], w[i], p[i]))
+	S.append(gS(gps_v[i], gps_a[i], s[i], d[i], w[i], p[i], tbreakf[i]))
 	i += 1
 	pass
 
@@ -195,6 +204,7 @@ S = ksmooth(S, 5)
 plt.plot(gps_t, S, color="black")
 plt.plot(gps_t, gps_a, color="grey")
 plt.plot(gps_t, s, color="C0")
+plt.plot(gps_t, tbreakf, color="C4")
 plt.xlabel('time in s')
 plt.ylabel('Stress')
 plt.title("Generrated Stress data for GPS measurement")
