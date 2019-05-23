@@ -1,0 +1,14 @@
+.MiniCardLeft {
+    width: 20%;
+    padding:5%;
+}
+.MiniCardCenter {
+    width: 20%;
+    padding:5%;
+    border-left: solid;
+    border-right:solid;
+}
+.MiniCardRight {
+    padding: 5%;
+    width: 20%;
+}

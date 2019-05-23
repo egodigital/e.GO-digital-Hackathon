@@ -13,6 +13,7 @@
   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
   <script src="./libs/leaflet-heat.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="kappa_lib.js"></script>
   <link rel="stylesheet" rel="kappa_lib.css">
@@ -24,9 +25,8 @@
         </ons-toolbar>
         
         <div id="page_body"></div>
-    </ons-page>
-
+        
     <script>
-        setMap("page_body", "map1");
+        setChart("page_body", "chart", "Speed");
     </script>
 </body>
