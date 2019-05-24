@@ -116,7 +116,7 @@ function setChart(parent, Id, title) {
     avg = 0;
     for(var i=0; i<data.t.length; i++) {
         var data_y;
-        if(title==="Speed") data_y=data.v[i]*3.6; // convert m/s to km/h
+        if(title==="Speed") data_y=data.V[i]*3.6; // convert m/s to km/h
         else if(title==="Stress") data_y=data.S[i];
         else console.log("title not found (setChart()).");
         series.push({x: data.t[i], y: data_y});

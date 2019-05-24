@@ -10,15 +10,15 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-drives = ["RunA", "RunB", "RunC", "RunD"];
+drives = ["Drive A", "Drive B", "Drive C", "Drive D", "Drive F", "Drive E"];
 data = [];
 for(var i = 0; i<drives.length; i++) {
     var rawdata = fs.readFileSync("public/"+drives[i]+".json");
     var obj = JSON.parse(rawdata);
     var data_obj = {
-      meanV: (obj.meanv*3.6).toFixed(1),
+      meanV: (obj.meanV*3.6).toFixed(1),
       meanS: obj.meanS.toFixed(1),
-      duration: obj.duaration.toFixed(1)
+      duration: obj.duration.toFixed(1)
     };
     data.push({drive: drives[i], values: data_obj});
 }
