@@ -7,8 +7,8 @@ Diese Application hängt von folgenden Projekten ab:
 - [Onsen UI](https://onsen.io/)
 - [Socket.io](https://socket.io/)
 - [Leaflet](https://leafletjs.com/)
-- [fontawesome](https://fontawesome.com/) 
-- [apexcharts](https://apexcharts.com/)
+- [Fontawesome](https://fontawesome.com/) 
+- [Apexcharts](https://apexcharts.com/)
 - [Node.js](https://nodejs.org/en/) (Version 10.x)
 
 ### Messdaten
