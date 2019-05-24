@@ -9,6 +9,7 @@ Wie wäre es, wenn es eine App gäbe, die den aktuelle Fahrstiel des Fahrers erm
 
 ### Sensorik
 Aus dem e.GO Fahrzeug werden folgende Messgrößen verwendet:
+
 | Messgröße 					| 	Verwendung 	|
 | -------- | ------- |
 | 	puls 						| 	Der Puls des Fahrers ist ein direkter Indikator für den Stress des Fahrers. 	|
@@ -17,8 +18,8 @@ Aus dem e.GO Fahrzeug werden folgende Messgrößen verwendet:
 | 	power_consumption 			| 	Diese Größe kann mit berücksichtigt werden, wenn man die durch das Gaspedal geforderte Beschleunigung bestimmen möchte. 
 | 	drive_mode 					| 	Ob der Fahrer sich im Sport oder im ECO Modus befindet kann ebenfalls zur bestimmung des Stresses des Fahrers genutzt werden. 
 | 	flash 						| 	Ob der Fahrer die Lichthupe oft betätigt
-| 	distance_to_object_* 		|	Sollte der Fahrer auf andere Fahrzeuge Auffahren (konkret drengeln) oder andere Fahrzeuge knapp überholen (Schneiden), kann man dieses Verhalten aus den Abständen nach hinten und nach vorne ableiten. (In kombination mit harten Lenkbewegungen)
-| 	tire_pressure_back_* 		| 	Wenn der Fahrer eine Kurve zu schnell nehemn sollte, kann man durch die Differenz des Reifendrucks zwischen der Rechten und Linken seinte eine Größe finden, welche die Schäglage des Fahrzeuges beschreibt.
+| 	distance_to_object_ 		|	Sollte der Fahrer auf andere Fahrzeuge Auffahren (konkret drengeln) oder andere Fahrzeuge knapp überholen (Schneiden), kann man dieses Verhalten aus den Abständen nach hinten und nach vorne ableiten. (In kombination mit harten Lenkbewegungen)
+| 	tire_pressure_back_ 		| 	Wenn der Fahrer eine Kurve zu schnell nehemn sollte, kann man durch die Differenz des Reifendrucks zwischen der Rechten und Linken seinte eine Größe finden, welche die Schäglage des Fahrzeuges beschreibt.
 
 ### Stress
 Die Größe, nach der wir suchen, ist der Stress, welcher ein Fahrer Verursacht bzw selber verspürt. Wenn Dicht aufgefahren wird, der Puls hoch ist oder intensiev gebremsst wird, sollte der Stress-Wert hoch sein.
