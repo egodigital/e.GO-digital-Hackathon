@@ -1,6 +1,6 @@
 e.GO-digital-Hackathon
 
-#Stressfrei - Team eHochKappa
+# Stressfrei - Team eHochKappa
 
 ## Web Application
 Diese Application hängt von folgenden Projekten ab:
