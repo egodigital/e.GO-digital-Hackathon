@@ -64,17 +64,25 @@ while i < len(gps_t):
 	gps_a.append((gps_v[i]-gps_v[i-1])/(gps_t[i]-gps_t[i-1]))
 	i += 1
 
-
-plt.plot(gps_t, gps_a, color="C0", label="GPS")
-plt.plot(t, gyro_abs, color="C1", label="Gyro")
-plt.plot(t, imu_x, color="C2", label="IMUx")
-plt.plot(t, imu_y, color="C3", label="IMUy")
-plt.plot(t, imu_z, color="C4", label="IMUz")
-plt.xlabel('time in s')
-plt.ylabel('acceleration in m/s^2')
-plt.title("GPS, IMU, Gyro acceleration readout")
-plt.legend()
+plt.figure(figsize=(6,2))
+plt.plot(gps_t, gps_v, color="black", linewidth=1)
+plt.title("GPS speed")
+plt.xlabel('time in $s$')
+plt.ylabel('speed in ${}$'.format("\\frac{m}{s}"))
+#plt.legend()
 plt.grid()
+plt.tight_layout()
+plt.show()
+plt.close()
+
+plt.figure(figsize=(6,2))
+plt.plot(gps_t, gps_a, color="black", linewidth=1)
+plt.title("GPS acceleration")
+plt.xlabel('time in $s$')
+plt.ylabel('acceleration in ${}$'.format("\\frac{m}{s^2}"))
+#plt.legend()
+plt.grid()
+plt.tight_layout()
 plt.show()
 plt.close()
 
@@ -198,6 +206,32 @@ while i < len(gps_t):
 
 S = [s if s >= 0 else 0 for s in S]
 S = ksmooth(S, 5)
+
+
+
+plt.figure(figsize=(6,2))
+plt.plot(gps_t, tbreakf, color="black", linewidth=1)
+plt.title("Break Value")
+plt.xlabel('time in $s$')
+plt.ylabel('acceleration in ${}$'.format("\\frac{m}{s^2}"))
+#plt.legend()
+plt.grid()
+plt.tight_layout()
+plt.show()
+plt.close()
+
+
+
+plt.figure(figsize=(6, 2))
+plt.plot(gps_t, S, color="red", linewidth=2)
+plt.title("Total Stress")
+plt.xlabel('time in $s$')
+plt.ylabel('Stress')
+#plt.legend()
+plt.grid()
+plt.tight_layout()
+plt.show()
+plt.close()
 
 
 
