@@ -27,7 +27,7 @@ Die Größe, nach der wir suchen, ist der Stress, welcher ein Fahrer Verursacht 
 ### Simulation
 Da wir nicht alle Daten Simlieren konnten haben wir uns dazu entschlussen mit einem Vergleichbaren Fahrzeugt und einem Smartphone die GPS Datenpunkte selber zu generrieren. Dazu haben wir die Software phyphox der RWTH sowie einen VW Up genutzt.
 
-![Phyphox](./Bilder/044d2a25-1028-45f7-a278-dde6750981a8.jpg)
+<img src="./Bilder/044d2a25-1028-45f7-a278-dde6750981a8.jpg" alt="drawing" width="300"/>
 
 (Die kleinen lücken in der GPS-GEschwindigkeit sind Stellen, an denen das kein GPS-Signal aufgezeichnet wurde. Diese Stellen werden später einfach hinaus geschnitten)
 
@@ -43,7 +43,11 @@ Und die darus resultierende Stress-Kurve:
 
 ### Heatmap
 ![Heatmap_Stadt](./Bilder/Stadt.png)
+Stadtfahrt
+
+
 ![Heatmap_Stadt](./Bilder/Bushaltestelle.png)
+Streßsituation an einer Bushaltestelle
 
 ### Signalweg
 Für ein Fertiges Produkt ist es Sinnvoll diese Daten auf dem Boardcomputer im e.GO zu verarbeiten und nach der Fahrt (oder in Packeten) die Ergebnisse auf einen Server zu schicken. Von da aus kann der User sich dann die aufgezeichneten Fahrten in der WebApp ansehen.
@@ -70,6 +74,12 @@ Die Struktur des Forntends orientiert sich an der Struktur von Onsen UI. index.h
 - page2: Auf der zweiten Seite werden die selbstgeschriebenen Elemente MapCard, Chart und SpeedStressCard verwendet.
 
 Bei einer Verbindung mit dem Server wird zuerst page1 aufgerufen. Über den Socket werden die Informationen über die erhältlichen Fahrten übermittelt. Mit dem Click auf eine Card wird die Detailansicht in page2 aufgerufen. Dazu wird zuerst über die Funkion loadPage() der JSON-File mit allen Messdaten in den Browser geladen. Danach werden die DOM-Elemente einzeln erzeugt und mit den geladenen Daten versorgt.
+
+<div>
+  <img src="./Bilder/page1.png" alt="drawing" width="250"/>
+  <img src="./Bilder/page2-1.png" alt="drawing" width="250"/>
+  <img src="./Bilder/page2-2.png" alt="drawing" width="250"/>
+</div>
 
 ### Backend
 Zu Beginn der Ausführung des Node.js-Servers werden Allgemeindaten der Fahrten aus den JSON-Files in den Arbeitsspeicher geladen und von dort aus, über den Socket, an die Clients weiterverteilt. Die großen Datenmengen holen sich die Clients über jQuery gleich aus den JSON-Dateien.
