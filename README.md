@@ -39,10 +39,14 @@ Diese Daten Werden dann mit dem Python-Script generrateSfromphyphox.py ausgewert
 
 Und die darus resultierende Stress-Kurve:
 
-![Stress](./Demo Plots/Stress.png)
+![Stress](./Demo_Plots/Stress.png)
+
+
 
 ### Signalweg
-Für ein Fertiges Produkt ist es Sinnvoll diese Daten auf dem Boardcomputer im e.GO zu verarbeiten und nach der Fahrt (oder in Packeten) die Ergebnisse auf einen Server zu schicken,
+Für ein Fertiges Produkt ist es Sinnvoll diese Daten auf dem Boardcomputer im e.GO zu verarbeiten und nach der Fahrt (oder in Packeten) die Ergebnisse auf einen Server zu schicken. Von da aus kann der User sich dann die aufgezeichneten Fahrten in der WebApp ansehen.
+
+Die Positionsdaten und Stress-Values werden anonym (gegebenen falls auch können die Positionen auch etwas randomisiert werden. Bei genügend Nutzern sollte sich das dann ausgleichen.) in eine globale Heat-Map übernommen. Diese kann dann für die Routenpalnung benutzt werden.
 
 ### Web Application
 Diese Application hängt von folgenden Projekten ab:
@@ -54,7 +58,7 @@ Diese Application hängt von folgenden Projekten ab:
 - [Node.js](https://nodejs.org/en/) (Version 10.x)
 
 ### Messdaten
-Die Messdaten werden mit Python analysiert und in JSON-Files gespeichert. Diese JSON-Files werden in den nodejs/public Ordner kopiert. Von dort aus können die Clients darauf zugreifen.
+Die Messdaten werden mit Python analysiert und in JSON-Files gespeichert. Diese JSON-Files werden in den nodejs/public Ordner kopiert. Von dort aus können die Clients darauf zugreifen. Das Verarbeiten der Daten (Berehcnung der Stress-Kurve) soll der Boadcomputer des e.GOs für das finale Produkt selber machen.
 
 ### Forntend
 Die Files für diesen Teil befinden sich in nodejs und nodejs/public.
