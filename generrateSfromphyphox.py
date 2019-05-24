@@ -230,9 +230,26 @@ class MyEncoder(json.JSONEncoder):
 		else:
 			return super(MyEncoder, self).default(obj)
 
-js = json.dumps({"v": gps_v, "a": gps_a, "t": gps_t, "lon": gps_lon, "lat": gps_lat, "S": S, "meanS": np.mean(S), "meanv": np.mean(gps_v), "duaration": gps_t[-1]}, sort_keys=True, cls=MyEncoder)
+"""
+tempv = []
+for v in gps_v:
+	tempv.append(round(v, 2))
+
+tempt = []
+for t in gps_t:
+	tempt.append(round(t, 3))
+
+js = json.dumps({"V": tempv, "a": np.around(gps_a, decimals=2), "t": tempt, "lon": np.around(gps_lon, decimals=5), "lat": np.around(gps_lat, decimals=5), "S": np.around(S, decimals=2), "meanS": np.round(np.mean(S), decimals=2), "meanV": np.round(np.mean(gps_v), decimals=2), "duration": np.round(gps_t[-1], decimals=2)}, sort_keys=True, cls=MyEncoder)
+"""
+js = json.dumps({"V": gps_v, "a": gps_a, "t": gps_t, "lon": gps_lon, "lat": gps_lat, "S": S, "meanS": np.mean(S), "meanV": np.mean(gps_v), "duration": gps_t[-1]}, sort_keys=True, cls=MyEncoder)
+
+
+
 
 print(js)
+
+exit()
+
 print()
 print()
 print()
