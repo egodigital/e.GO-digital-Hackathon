@@ -1,10 +1,10 @@
-
+data = {};
 
 function setMap(parentId, mapId) {
     $('#'+parentId).append(
         '<ons-card class="MapCard">'+
             '<div class="title">'+
-                '<div class="center">Simple Map View</div>'+
+                '<div class="center">Map View</div>'+
             '</div>'+
             //<!-- add map here -->
             '<div id="'+mapId+'" class="map" style="height: 70vh"></div>'+
@@ -26,54 +26,79 @@ function setMap(parentId, mapId) {
         map.setView(new L.LatLng(50.784411, 6.047544), 14.5);
         map.addLayer(osm);
 
-        var heat = L.heatLayer([
-            [50.7841, 6.0471, 0.2], // lat, lng, intensity
-            [50.7842, 6.0472, 0.5],
-            [50.7843, 6.0473, 0.5],
-            [50.7844, 6.0474, 0.5],
-        ], {radius: 25}).addTo(map);
+        //Calculate intensity
+        var intens = [];
+        //find max, min
+        var max=-1000;
+        var min=1000;
+        for(var i=0; i<data.S.length; i++) {
+            if(max<data.S[i]) max = data.S[i];
+            if(min>data.S[i]) min = data.S[i];
+        }
+
+        // format S to intensity 0<=intensity<=1
+        for(var i=0; i<data.S.length; i++) {
+            intens.push((data.S[i]-min)/max);
+        }
+
+        //Format data
+        series = [];
+        for(var i=0; i<data.S.length; i++) {
+            var lat = data.lat[i];
+            var long = data.lon[i];
+            var int = intens[i];
+            series.push([lat, long, int]); // lat, lng, intensity
+        }
+
+        var heat = L.heatLayer(series, {radius: 25}).addTo(map);
         
     }
 
-function setMiniTripCard(parent, id) {
+function setMiniTripCard(parent, id, title) {
     $('#'+parent).append(
         '<ons-card id="'+id+'" class = "MiniCard">' +
             '<div class="title">' +
-                '<i class="fas fa-user-alt" style="border: solid; border-radius: 50%; padding:3%; margin-right:5%"></i>'+
-                'Justus'+
-                '<ons-button style="margin-left:5%; float:right">'+
+                '<i class="fas fa-car-side" style="border: solid; border-radius: 50%; padding:3%; margin-right:5%"></i>'+
+                title+
+                '<ons-button style="margin-right:5px; float:right">'+
                     '<i class="fas fa-ellipsis-v"></i>'+
                 '</ons-button>'+
-                '<ons-button style="float:right;">'+
+                '<ons-button style="margin-right:10px;float:right;">'+
                     '<i class="fas fa-share-alt"></i>'+
                 '</ons-button>'+
             '</div>' +
             '<div class="centeredCardContend">'+
                 '<div class="MiniCardLeft">'+
-                    '<p>Distance</p>'+
-                    '<p id="'+id+'_distance"></p>'+
+                    '<p align="center">Duration</p>'+
+                    '<p align="center" id="'+id+'_duration"></p>'+
                 '</div>'+
                 '<div class="MiniCardCenter center">'+
-                    '<p>Speed</p>'+
-                    '<p id="'+id+'_speed"></p>'+
+                    '<p align="center">&Oslash; Speed</p>'+
+                    '<p align="center" id="'+id+'_speed"></p>'+
                     '</div>'+
                 '<div class="MiniCardRight">'+
-                    '<p>Stress</p>'+
-                    '<p id="'+id+'_stress"></p>'+
+                    '<p align="center">&Oslash; Stress</p>'+
+                    '<p align="center" id="'+id+'_stress"></p>'+
                 '</div>'+
             '</div>'+
         '</ons-card>'
     );
 
-    $('#'+id+'_distance').html("100 km");
-    $('#'+id+'_speed').html("50 km/h");
-    $('#'+id+'_stress').html("300");
+    socket.on('singleValues_'+title, function(data) {
+        var minutes = data.duration/60;
+        $('#'+id+'_duration').html((minutes.toFixed(1))+" min");
+        $('#'+id+'_speed').html(data.meanV+" km/h");
+        $('#'+id+'_stress').html(data.meanS);
+    });
+    socket.emit('getSignleValues', title);
 
     // Go to details if clicked:
     $('#'+id).click(function () {
-        document.querySelector('#myNavigator').pushPage('page2.html', {data: {title: 'Kappa'}});
+        page_title = title;
+        document.querySelector('#myNavigator').pushPage('page2.html', {data: {title: title}});
     });
 }
+
 
 function setChart(parent, Id, title) {
     $('#'+parent).append(
@@ -86,6 +111,22 @@ function setChart(parent, Id, title) {
     '</ons-page>'
     );
 
+    //Set up data:
+    series = []
+    avg = 0;
+    for(var i=0; i<data.t.length; i++) {
+        var data_y;
+        if(title==="Speed") data_y=data.V[i]*3.6; // convert m/s to km/h
+        else if(title==="Stress") data_y=data.S[i];
+        else console.log("title not found (setChart()).");
+        series.push({x: data.t[i], y: data_y});
+        avg+=data_y;
+    }
+    avg/=data.t.length;
+
+    var y_label = "";
+    if(title==="Speed") y_label="km/h";
+
     var options = {
         chart: {
             height: 200,
@@ -94,6 +135,20 @@ function setChart(parent, Id, title) {
             enabled: false
             }
         },
+        annotations: { // add avg-line
+            yaxis: [{
+                y: avg,
+                borderColor: '#969696',
+                label: {
+                    borderColor: '#969696',
+                    style: {
+                        color: '#fff',
+                        background: '#969696',
+                    },
+                    text: 'Avg',
+                }
+            }]
+        },
         dataLabels: {
             enabled: false
         },
@@ -101,21 +156,41 @@ function setChart(parent, Id, title) {
             curve: 'straight'
         },
         series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+            name: title,
+            data: series //[10, 41, 35, 51, 49, 62, 69, 91, 148]
         }],
         grid: {
             row: {
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
             opacity: 0.5
             }
+        },
+        yaxis: {
+            labels: {
+                formatter: function (val) {
+                  return val.toFixed(1);
+                }
+            },
+            title: {
+                text: y_label
+            }
+        },
+        xaxis: {
+            labels: {
+                formatter: function (val) {
+                  return (val / 60).toFixed(1);
+                }
+            },
+            title: {
+                text: 'Time [min]'
+            }
         }
     }
-  
+
     var chart = new ApexCharts(
-    document.querySelector("#"+Id+"chart"),
-    options
-    );
+        document.querySelector("#"+Id+"chart"),
+        options
+    );[10, 41, 35, 51, 49, 62, 69, 91, 148]
 
     chart.render();
 }
@@ -136,6 +211,21 @@ function setSpeedStressCard(parent, id) {
         '</ons-card>'
     );
 
-    $('#'+id+'_speed').html("100 km/h");
-    $('#'+id+'_stress').html("300");
+    socket.on('singleValues_'+page_title, function(data) {   
+        $('#'+id+'_speed').html(data.meanV+" km/h");
+        $('#'+id+'_stress').html(data.meanS);
+    });
+    socket.emit('getSignleValues', page_title);
+}
+
+
+function loadPage(title) {
+    $.getJSON(title+".json", function(msg) {
+        data = msg;
+    }).done(function() {
+        setMap("page2_body", "map1");
+        setSpeedStressCard("page2_body", "card");
+        setChart("page2_body", "speed_chart", "Speed");
+        setChart("page2_body", "stress_chart", "Stress");
+    });
 }
