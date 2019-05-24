@@ -2,7 +2,7 @@ e.GO-digital-Hackathon
 
 # Stressfrei - Team eHochKappa
 
-## Web Application
+### Web Application
 Diese Application hängt von folgenden Projekten ab:
 - [Onsen UI](https://onsen.io/)
 - [Socket.io](https://socket.io/)
