@@ -27,8 +27,27 @@ Die Größe, nach der wir suchen, ist der Stress, welcher ein Fahrer Verursacht 
 ### Simulation
 Da wir nicht alle Daten Simlieren konnten haben wir uns dazu entschlussen mit einem Vergleichbaren Fahrzeugt und einem Smartphone die GPS Datenpunkte selber zu generrieren. Dazu haben wir die Software phyphox der RWTH sowie einen VW Up genutzt.
 
+![Phyphox](./Bilder/044d2a25-1028-45f7-a278-dde6750981a8.jpg)
+
+(Die kleinen lücken in der GPS-GEschwindigkeit sind Stellen, an denen das kein GPS-Signal aufgezeichnet wurde. Diese Stellen werden später einfach hinaus geschnitten)
+
+Diese Daten Werden dann mit dem Python-Script generrateSfromphyphox.py ausgewerted. Dabei wir aus den GPS-Daten die Beschleunigung des Fahrzeuges berechnet. Wir haben noch eine Größe "BreakValue" hinzugefügt, welche eine verzögerte Version der Beschleunigung ist (Nur Werte die zum Bremsen passen), welche (mehr oder weniger) den zusätzlichen Stress beschreibt, welchen der Fahrer erfährt, wenn er nicht mehr schnell fahren kann.
+
+![Geschwindigkeit](./Demo_Plots/GPS_Speed.png)
+![Beschleunigung](./Demo_Plots/GPS_acceleration.png)
+![BreakValue](./Demo_Plots/GPS_breaks.png)
+
+Und die darus resultierende Stress-Kurve:
+
+![Stress](./Demo_Plots/Stress.png)
+
+### Heatmap
+![Heatmap](./Bilder/Bildschirmfoto vom 2019-05-24 14-40-07.png)
+
 ### Signalweg
-Für ein Fertiges Produkt ist es Sinnvoll diese Daten auf dem Boardcomputer im e.GO zu verarbeiten und nach der Fahrt (oder in Packeten) die Ergebnisse auf einen Server zu schicken,
+Für ein Fertiges Produkt ist es Sinnvoll diese Daten auf dem Boardcomputer im e.GO zu verarbeiten und nach der Fahrt (oder in Packeten) die Ergebnisse auf einen Server zu schicken. Von da aus kann der User sich dann die aufgezeichneten Fahrten in der WebApp ansehen.
+
+Die Positionsdaten und Stress-Values werden anonym (gegebenen falls auch können die Positionen auch etwas randomisiert werden. Bei genügend Nutzern sollte sich das dann ausgleichen.) in eine globale Heat-Map übernommen. Diese kann dann für die Routenpalnung benutzt werden.
 
 ### Web Application
 Diese Application hängt von folgenden Projekten ab:
@@ -40,7 +59,7 @@ Diese Application hängt von folgenden Projekten ab:
 - [Node.js](https://nodejs.org/en/) (Version 10.x)
 
 ### Messdaten
-Die Messdaten werden mit Python analysiert und in JSON-Files gespeichert. Diese JSON-Files werden in den nodejs/public Ordner kopiert. Von dort aus können die Clients darauf zugreifen.
+Die Messdaten werden mit Python analysiert und in JSON-Files gespeichert. Diese JSON-Files werden in den nodejs/public Ordner kopiert. Von dort aus können die Clients darauf zugreifen. Das Verarbeiten der Daten (Berehcnung der Stress-Kurve) soll der Boadcomputer des e.GOs für das finale Produkt selber machen.
 
 ### Forntend
 Die Files für diesen Teil befinden sich in nodejs und nodejs/public.
