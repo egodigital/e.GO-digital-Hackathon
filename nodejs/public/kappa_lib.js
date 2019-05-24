@@ -1,6 +1,5 @@
 data = {}; // data of current drive in page2
 
-
 // set up heatmap and append to parent with specific mapId 
 function setMap(parentId, mapId) {
     $('#'+parentId).append(
@@ -62,10 +61,10 @@ function setMiniTripCard(parent, id, title) {
             '<div class="title">' +
                 '<i class="fas fa-car-side" style="border: solid; border-radius: 50%; padding:3%; margin-right:5%"></i>'+
                 title+
-                '<ons-button style="margin-right:5px; float:right">'+
+                '<ons-button id="'+id+'_menu_btn" style="margin-right:5px; float:right">'+
                     '<i class="fas fa-ellipsis-v"></i>'+
                 '</ons-button>'+
-                '<ons-button style="margin-right:10px;float:right;">'+
+                '<ons-button id="'+id+'_share_btn" style="margin-right:10px;float:right;">'+
                     '<i class="fas fa-share-alt"></i>'+
                 '</ons-button>'+
             '</div>' +
@@ -83,8 +82,27 @@ function setMiniTripCard(parent, id, title) {
                     '<p align="center" id="'+id+'_stress"></p>'+
                 '</div>'+
             '</div>'+
-        '</ons-card>'
+        '</ons-card>'+
+        '<ons-toast id="'+id+'_menu_toast" animation="ascend">'+
+            '<ons-button><i class="fas fa-trash-alt fa-2x"></i></ons-button>'+
+            '<button onclick="'+id+'_menu_toast.hide()">ok</button>'+
+        '</ons-toast>'+
+        '<ons-toast id="'+id+'_share_toast" animation="ascend">'+
+            '<ons-button><i class="fas fa-sms fa-2x"></i></ons-button>'+
+            '<ons-button style="margin-left:10px"><i class="fas fa-envelope fa-2x"></i></ons-button>'+
+            '<button onclick="'+id+'_share_toast.hide()">ok</button>'+
+        '</ons-toast>'
     );
+
+    // add button actions
+    $('#'+id+'_menu_btn').click(function(e) {
+        e.stopPropagation();
+        $('#'+id+'_menu_toast').toggle();
+    });
+    $('#'+id+'_share_btn').click(function (e) {
+        e.stopPropagation();
+        $('#'+id+'_share_toast').toggle();
+    });
 
     //update values on socket event
     socket.on('singleValues_'+title, function(data) {
