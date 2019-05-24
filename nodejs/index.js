@@ -4,13 +4,16 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require("fs");
 
+//include directory public
 app.use(express.static(__dirname + '/public'));
 
+//send index.html on request
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-drives = ["Drive A", "Drive B", "Drive C", "Drive D", "Drive F", "Drive E"];
+//read general data form JSON-Files
+drives = ["Drive A", "Drive B", "Drive C", "Drive D", "Drive F", "Drive E"]; // Available drives
 data = [];
 for(var i = 0; i<drives.length; i++) {
     var rawdata = fs.readFileSync("public/"+drives[i]+".json");
@@ -23,7 +26,7 @@ for(var i = 0; i<drives.length; i++) {
     data.push({drive: drives[i], values: data_obj});
 }
 
-
+// get data for specific drive 
 function getDrive(drive) {
   for(var i=0; i<data.length; i++) {
     if(data[i].drive===drive) return data[i].values;
@@ -38,12 +41,15 @@ io.on('connection', function(socket){
   socket.on('message', function(msg) {
     console.log(msg)
   })
+  // send drives on connect
   socket.emit('drives', drives);
+  // send general data on request
   socket.on('getSignleValues', function(msg) {
     // Get all single-values form data
     var data = getDrive(msg);
     socket.emit('singleValues_'+msg, data);
   });
+  
   socket.on('disconnect', function(){
     clients-=1;
     console.log(clients+' user connected');
