@@ -1,12 +1,13 @@
-data = {};
+data = {}; // data of current drive in page2
 
+
+// set up heatmap and append to parent with specific mapId 
 function setMap(parentId, mapId) {
     $('#'+parentId).append(
         '<ons-card class="MapCard">'+
             '<div class="title">'+
                 '<div class="center">Map View</div>'+
             '</div>'+
-            //<!-- add map here -->
             '<div id="'+mapId+'" class="map" style="height: 70vh"></div>'+
         '</ons-card>'
     )
@@ -26,7 +27,7 @@ function setMap(parentId, mapId) {
         map.setView(new L.LatLng(50.784411, 6.047544), 14.5);
         map.addLayer(osm);
 
-        //Calculate intensity
+        //Calculate intensity:
         var intens = [];
         //find max, min
         var max=-1000;
@@ -36,7 +37,7 @@ function setMap(parentId, mapId) {
             if(min>data.S[i]) min = data.S[i];
         }
 
-        // format S to intensity 0<=intensity<=1
+        // format S to intensity -> 0 <= intensity <= 1
         for(var i=0; i<data.S.length; i++) {
             intens.push((data.S[i]-min)/max);
         }
@@ -54,6 +55,7 @@ function setMap(parentId, mapId) {
         
     }
 
+// append MiniTripCard to parent on page1
 function setMiniTripCard(parent, id, title) {
     $('#'+parent).append(
         '<ons-card id="'+id+'" class = "MiniCard">' +
@@ -84,12 +86,14 @@ function setMiniTripCard(parent, id, title) {
         '</ons-card>'
     );
 
+    //update values on socket event
     socket.on('singleValues_'+title, function(data) {
         var minutes = data.duration/60;
         $('#'+id+'_duration').html((minutes.toFixed(1))+" min");
         $('#'+id+'_speed').html(data.meanV+" km/h");
         $('#'+id+'_stress').html(data.meanS);
     });
+    // request data for this card
     socket.emit('getSignleValues', title);
 
     // Go to details if clicked:
@@ -99,7 +103,7 @@ function setMiniTripCard(parent, id, title) {
     });
 }
 
-
+// append chart to parent on page2 with unique id and chart-title
 function setChart(parent, Id, title) {
     $('#'+parent).append(
         '<ons-card>'+
@@ -124,6 +128,7 @@ function setChart(parent, Id, title) {
     }
     avg/=data.t.length;
 
+    // configure chart
     var y_label = "";
     if(title==="Speed") y_label="km/h";
 
@@ -157,7 +162,7 @@ function setChart(parent, Id, title) {
         },
         series: [{
             name: title,
-            data: series //[10, 41, 35, 51, 49, 62, 69, 91, 148]
+            data: series
         }],
         grid: {
             row: {
@@ -195,6 +200,7 @@ function setChart(parent, Id, title) {
     chart.render();
 }
 
+// append SpeedStressCard to parent on page2 with unique id
 function setSpeedStressCard(parent, id) {
     $('#'+parent).append(
         '<ons-card>'+
@@ -211,13 +217,16 @@ function setSpeedStressCard(parent, id) {
         '</ons-card>'
     );
 
+    //update values on socket event
     socket.on('singleValues_'+page_title, function(data) {   
         $('#'+id+'_speed').html(data.meanV+" km/h");
         $('#'+id+'_stress').html(data.meanS);
     });
+    //request data for this card
     socket.emit('getSignleValues', page_title);
 }
 
+// first: loadt JSON-File, then: setup page elements
 function loadPage(title) {
     $.getJSON(title+".json", function(msg) {
         data = msg;
