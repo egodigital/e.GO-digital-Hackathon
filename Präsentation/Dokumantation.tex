@@ -21,13 +21,13 @@
 	\centering
 	\title{Stressfrei}
 	\author{Justus Teller und Paul Surrey \\
-	Gruppe $e^\kappa$}
-	\markboth{e.GO:digital Hackathon 2019 - Gruppe $e^\kappa$ - Justus Teller und Paul Surrey}{}
+	Team $e^\kappa$}
+	\markboth{e.GO:digital Hackathon 2019 - Team $e^\kappa$ - Justus Teller und Paul Surrey}{}
 	\maketitle
 	\tableofcontents
 \end{titlepage}
 	\newpage
-	\twocolumn
+	%\twocolumn
 
 \section{Motivation}
 	Jeder kennt es: Auf der Autobahn wird von hinten gedrängelt; in der Stadt meint jeder Vorfahrt zu haben. Das nervt!
@@ -38,31 +38,31 @@
 	Als Stress definieren wir eine Größe, die sich aus den folgenden Messpunkten berechnet:
 	
 	\begin{itemize}
-		\item distance_to_object_*
-		\item drive_mode
+		\item distance to object
+		\item drive mode
 		\item flash
 		\item location
-		\item power_consumption
+		\item power consumption
 		\item speed
 		\item puls
-		\item tire_pressure_*
+		\item tire pressure
 	\end{itemize}
 
-	\subsection{distance_to_object_*}
+	\subsection{distance to object}
 		Hier sollen die Sensoren benutzt werden um zu vermessen wie der Fahrer auf das Auto vor Ihm auffährt. Zudem können mit den Sensoren, welche den Abstand zu den Seiten bestimmen, herausgefunden werden, wie start der Fahrer beim überholen andere Verkehrsteilnehmer "schneidet".
-	\subsection{drive_mode}
+	\subsection{drive mode}
 		Der Drive Mode kann als einfacher Faktor mit berücksichtigt werden. Ist dieser auf "sport" gestellt, kann man davon ausgehen, dass die Fahrweise aggresiver sein kann, als im "eco" modus.
 	\subsection{flash}
 		Die Größe flash, welche die Verwendung der Lichthupe beschreibt, ist ein sehr guter Parameter, falls der Wert länger true ist.
 	\subsection{location}
 		Diese Informationen werden genutzt um die Position des Messpunktes auf der Karte darzustellen. Zudem haben wir für unsere Demo die Daten ausschließlich aus GPS-Messungen erzeugt. (Dazu später mehr).
-	\subsection{power_consumption}
+	\subsection{power consumption}
 		Da die Power Consumption auch den Stromverbrauch der Heizung und Co mit berücksichtigt, muss die Größe um entsprechend korrigiert werden (Mittelwert über längere Zeit nehmen und den dann von allen Messpunkten abziehen).
 	\subsection{speed}
 		Die Geschwindigkeit kann auch aus den GPS-Daten berechnet werden. Die Rechenarbeit kann man sich sparen, in dem man direkt die Größe speed benutzt.
 	\subsection{puls}
 		Das ist die Interressanteste Größe. Wenn die Erkennung des Pulses des Fahrers zuverlässig funktioniert kann so der Stress des Fahrers (mehr oder weniger) sehr gut bestimmt werden.
-	\subsectoin{tire_pressure_*}
+	\subsection{tire pressure}
 		Um die Kurvenlage des Fahrzeuges zu bestimmen, kann die Druckdifferenz zischen den Reifen auf der Linken und der Rechten Seite bestimmt werden. Zudem kann man nach dem selben Prinzip auch das Bremsen und Beschleunigen Quantifizieren. 
 	\subsection{}
 
