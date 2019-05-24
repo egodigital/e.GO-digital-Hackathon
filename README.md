@@ -41,7 +41,8 @@ Und die darus resultierende Stress-Kurve:
 
 ![Stress](./Demo_Plots/Stress.png)
 
-
+### Heatmap
+![Heatmap](./Bilder/Bildschirmfoto vom 2019-05-24 14-40-07.png)
 
 ### Signalweg
 Für ein Fertiges Produkt ist es Sinnvoll diese Daten auf dem Boardcomputer im e.GO zu verarbeiten und nach der Fahrt (oder in Packeten) die Ergebnisse auf einen Server zu schicken. Von da aus kann der User sich dann die aufgezeichneten Fahrten in der WebApp ansehen.
