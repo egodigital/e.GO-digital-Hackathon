@@ -27,6 +27,20 @@ Die Größe, nach der wir suchen, ist der Stress, welcher ein Fahrer Verursacht 
 ### Simulation
 Da wir nicht alle Daten Simlieren konnten haben wir uns dazu entschlussen mit einem Vergleichbaren Fahrzeugt und einem Smartphone die GPS Datenpunkte selber zu generrieren. Dazu haben wir die Software phyphox der RWTH sowie einen VW Up genutzt.
 
+![Phyphox](./Bilder/044d2a25-1028-45f7-a278-dde6750981a8.jpg)
+
+(Die kleinen lücken in der GPS-GEschwindigkeit sind Stellen, an denen das kein GPS-Signal aufgezeichnet wurde. Diese Stellen werden später einfach hinaus geschnitten)
+
+Diese Daten Werden dann mit dem Python-Script generrateSfromphyphox.py ausgewerted. Dabei wir aus den GPS-Daten die Beschleunigung des Fahrzeuges berechnet. Wir haben noch eine Größe "BreakValue" hinzugefügt, welche eine verzögerte Version der Beschleunigung ist (Nur Werte die zum Bremsen passen), welche (mehr oder weniger) den zusätzlichen Stress beschreibt, welchen der Fahrer erfährt, wenn er nicht mehr schnell fahren kann.
+
+![Geschwindigkeit](./Demo_Plots/GPS_Speed.png)
+![Beschleunigung](./Demo_Plots/GPS_acceleration.png)
+![BreakValue](./Demo_Plots/GPS_breaks.png)
+
+Und die darus resultierende Stress-Kurve:
+
+![Stress](./Demo Plots/Stress.png)
+
 ### Signalweg
 Für ein Fertiges Produkt ist es Sinnvoll diese Daten auf dem Boardcomputer im e.GO zu verarbeiten und nach der Fahrt (oder in Packeten) die Ergebnisse auf einen Server zu schicken,
 
