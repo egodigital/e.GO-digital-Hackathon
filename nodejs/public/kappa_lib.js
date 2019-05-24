@@ -218,7 +218,6 @@ function setSpeedStressCard(parent, id) {
     socket.emit('getSignleValues', page_title);
 }
 
-
 function loadPage(title) {
     $.getJSON(title+".json", function(msg) {
         data = msg;
