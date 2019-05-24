@@ -6,9 +6,6 @@
   <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
-  <script>
-    var socket = io();
-  </script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
   <script src="./libs/leaflet-heat.js"></script>
@@ -16,6 +13,10 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="kappa_lib.js"></script>
   <link rel="stylesheet" href="kappa_lib.css">
+  <script>
+    var socket = io();
+    var page_title = "page1";
+  </script>
 </head>
 <body>
     <ons-navigator swipeable id="myNavigator" page="page1.html"></ons-navigator>
@@ -28,8 +29,11 @@
 
       <div id="page1_body"></div>
       <script>
-        setMiniTripCard("page1_body", "card1");
-        setMiniTripCard("page1_body", "card2");
+        socket.on('drives', function(array) {
+          for(var i=0; i<array.length; i++) {
+            setMiniTripCard("page1_body", "card"+i, array[i]);
+          }
+        });
       </script>
     </ons-page>
   </template>
@@ -37,16 +41,13 @@
   <template id="page2.html">
     <ons-page id="page2">
       <ons-toolbar>
-        <div class="left"><ons-back-button>Kappa</ons-back-button></div>
+        <div class="left"><ons-back-button></ons-back-button></div>
         <div class="center"></div>
       </ons-toolbar>
 
       <div id="page2_body"></div>
       <script>
-          setMap("page2_body", "map1");
-          setChart("page2_body", "speed_chart", "Speed");
-          setChart("page2_body", "stress_chart", "Stress");
-          setSpeedStressCard("page2_body", "card");
+          loadPage(page_title);
         </script>
     </ons-page>
   </template>
