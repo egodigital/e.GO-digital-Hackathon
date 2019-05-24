@@ -1,5 +1,6 @@
-#e.GO-digital-Hackathon - Stressfrei
-Team eHochKappa
+e.GO-digital-Hackathon
+
+#Stressfrei - Team eHochKappa
 
 ## Web Application
 Dieses Application hängt von folgenden Projekten ab:
@@ -17,8 +18,8 @@ Die Messdaten werden mit Python analysiert und in JSON-Files gespeichert. Diese 
 Die Files für diesen Teil befinden sich in nodejs und nodejs/public.
 Die Struktur des Forntends orientiert sich an der Struktur von Onsen UI. index.html definiert die beiden Onsen-Seiten der Web-App. Für die dynamische Erzeugung von Elementen wurden Funktionen in kappa_lib.js definiert.
 
-    - page1: Auf der ersten werden als Elemente der Onsen-Navigator <ons-navigator> und die MiniTripCard der Funktion setMiniTripCard verwendet.
-    - page2: Auf der zweiten Seite werden die selbstgeschriebenen Elemente MapCard, Chart und SpeedStressCard verwendet.
+- page1: Auf der ersten werden als Elemente der Onsen-Navigator <ons-navigator> und die MiniTripCard der Funktion setMiniTripCard verwendet.
+- page2: Auf der zweiten Seite werden die selbstgeschriebenen Elemente MapCard, Chart und SpeedStressCard verwendet.
 
 Bei einer Verbindung mit dem Server wird zuerst page1 aufgerufen. Über den Socket werden die Informationen über die erhältlichen Fahrten übermittelt. Mit dem Click auf eine Card wird die Detailansicht in page2 aufgerufen. Dazu wird zuerst über die Funkion loadPage() der JSON-File mit allen Messdaten in den Browser geladen. Danach werden die DOM-Elemente einzeln erzeugt und mit den geladenen Daten versorgt.
 
